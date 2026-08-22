@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR-GITHUB-USERNAME.github.io/niki-family/sitemap.xml
+Sitemap: https://nikanstudio.github.io/NikiFamily/sitemap.xml
