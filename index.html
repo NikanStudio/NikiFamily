@@ -7,7 +7,6 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO اصلی -->
     <title>نیکی فمیلی | انجمن نیکی سمیعی</title>
 
     <meta name="description"
@@ -25,117 +24,73 @@
     <meta name="theme-color"
           content="#7c3aed">
 
+    <link rel="canonical"
+          href="https://nikanstudio.github.io/NikiFamily/">
 
-    <!-- Canonical -->
-    <link
-        rel="canonical"
-        href="https://nikanstudio.github.io/NikiFamily/"
-    >
+    <meta property="og:title"
+          content="نیکی فمیلی | انجمن نیکی سمیعی">
 
+    <meta property="og:description"
+          content="انجمن دوستان و طرفداران نیکی سمیعی؛ گفتگو، تاپیک و پاسخ">
 
-    <!-- Open Graph -->
-    <meta
-        property="og:title"
-        content="نیکی فمیلی | انجمن نیکی سمیعی"
-    >
+    <meta property="og:type"
+          content="website">
 
-    <meta
-        property="og:description"
-        content="انجمن دوستان و طرفداران نیکی سمیعی؛ گفتگو، تاپیک و پاسخ"
-    >
+    <meta property="og:url"
+          content="https://nikanstudio.github.io/NikiFamily/">
 
-    <meta
-        property="og:type"
-        content="website"
-    >
+    <meta property="og:site_name"
+          content="نیکی فمیلی">
 
-    <meta
-        property="og:url"
-        content="https://YOUR-GITHUB-USERNAME.github.io/niki-family/"
-    >
+    <meta property="og:locale"
+          content="fa_IR">
 
-    <meta
-        property="og:site_name"
-        content="نیکی فمیلی"
-    >
+    <meta name="twitter:card"
+          content="summary">
 
-    <meta
-        property="og:locale"
-        content="fa_IR"
-    >
+    <meta name="twitter:title"
+          content="نیکی فمیلی | انجمن نیکی سمیعی">
 
+    <meta name="twitter:description"
+          content="انجمن دوستان و طرفداران نیکی سمیعی">
 
-    <!-- Twitter / X -->
-    <meta
-        name="twitter:card"
-        content="summary"
-    >
-
-    <meta
-        name="twitter:title"
-        content="نیکی فمیلی | انجمن نیکی سمیعی"
-    >
-
-    <meta
-        name="twitter:description"
-        content="انجمن دوستان و طرفداران نیکی سمیعی"
-    >
-
-
-    <!-- Schema.org -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
-
         "name": "نیکی فمیلی",
-
         "alternateName": [
             "Niki Family",
             "نیکی فمیلی انجمن"
         ],
-
-        "description":
-        "انجمن دوستان و طرفداران نیکی سمیعی برای گفتگو، ساخت تاپیک و پاسخ به موضوعات مختلف.",
-
-        "url":
-        "https://YOUR-GITHUB-USERNAME.github.io/niki-family/",
-
+        "description": "انجمن دوستان و طرفداران نیکی سمیعی برای گفتگو، ساخت تاپیک و پاسخ به موضوعات مختلف.",
+        "url": "https://nikanstudio.github.io/NikiFamily/",
         "inLanguage": "fa-IR"
     }
     </script>
 
-
-    <!-- WebPage Schema -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-
         "@type": "WebPage",
-
-        "name":
-        "نیکی فمیلی | انجمن نیکی سمیعی",
-
-        "description":
-        "انجمن نیکی فمیلی برای دوستان و طرفداران نیکی سمیعی.",
-
+        "name": "نیکی فمیلی | انجمن نیکی سمیعی",
+        "description": "انجمن نیکی فمیلی برای دوستان و طرفداران نیکی سمیعی.",
         "isPartOf": {
             "@type": "WebSite",
             "name": "نیکی فمیلی"
         },
-
         "inLanguage": "fa-IR"
     }
     </script>
 
-
     <link rel="stylesheet" href="style.css">
-<meta name="google-site-verification" content="NA-VNYwk0HUDZgIJAKjF9BjkwXk6v08Cx38b94RFlmo" />
+
+    <meta name="google-site-verification"
+          content="NA-VNYwk0HUDZgIJAKjF9BjkwXk6v08Cx38b94RFlmo">
+
 </head>
 
-
 <body>
-
 
 <header class="header">
 
@@ -157,14 +112,51 @@
 
         </div>
 
+        <div class="header-buttons">
 
-        <button
-            class="new-topic-btn"
-            onclick="openTopicForm()">
+            <button
+                id="loginButton"
+                class="header-auth-btn"
+                onclick="openLogin()">
 
-            + ساخت تاپیک
+                ورود
 
-        </button>
+            </button>
+
+            <button
+                id="registerButton"
+                class="header-auth-btn"
+                onclick="openRegister()">
+
+                ثبت نام
+
+            </button>
+
+            <button
+                id="logoutButton"
+                class="header-auth-btn"
+                onclick="logout()"
+                style="display:none">
+
+                خروج
+
+            </button>
+
+            <span
+                id="userDisplay"
+                class="user-display"
+                style="display:none">
+            </span>
+
+            <button
+                class="new-topic-btn"
+                onclick="openTopicForm()">
+
+                + ساخت تاپیک
+
+            </button>
+
+        </div>
 
     </div>
 
@@ -173,8 +165,6 @@
 
 <main class="container">
 
-
-    <!-- معرفی اصلی سایت -->
 
     <section class="hero">
 
@@ -195,8 +185,6 @@
     </section>
 
 
-    <!-- جستجو -->
-
     <section class="search-box">
 
         <label for="searchInput">
@@ -212,8 +200,6 @@
     </section>
 
 
-    <!-- انجمن -->
-
     <section class="forum">
 
         <div class="section-title">
@@ -228,7 +214,6 @@
 
         </div>
 
-
         <div id="topics"></div>
 
     </section>
@@ -239,9 +224,7 @@
 
 <!-- ساخت تاپیک -->
 
-<div
-    id="topicModal"
-    class="modal">
+<div id="topicModal" class="modal">
 
     <div class="modal-box">
 
@@ -253,29 +236,23 @@
 
         </button>
 
-
         <h2>
             ساخت تاپیک در نیکی فمیلی
         </h2>
-
 
         <input
             id="username"
             type="text"
             placeholder="نام شما">
 
-
         <input
             id="topicTitle"
             type="text"
             placeholder="عنوان تاپیک">
 
-
         <textarea
             id="topicText"
-            placeholder="موضوع خود را بنویسید...">
-        </textarea>
-
+            placeholder="موضوع خود را بنویسید..."></textarea>
 
         <button
             class="submit-btn"
@@ -292,9 +269,7 @@
 
 <!-- مشاهده تاپیک -->
 
-<div
-    id="topicView"
-    class="modal">
+<div id="topicView" class="modal">
 
     <div class="modal-box topic-page">
 
@@ -306,29 +281,22 @@
 
         </button>
 
-
         <div id="topicContent"></div>
 
-
         <hr>
-
 
         <h3>
             پاسخ به تاپیک
         </h3>
-
 
         <input
             id="replyName"
             type="text"
             placeholder="نام شما">
 
-
         <textarea
             id="replyText"
-            placeholder="پاسخ خود را بنویسید...">
-        </textarea>
-
+            placeholder="پاسخ خود را بنویسید..."></textarea>
 
         <button
             class="submit-btn"
@@ -343,6 +311,68 @@
 </div>
 
 
+<!-- ورود / ثبت نام -->
+
+<div id="authModal" class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeAuth()">
+
+            ×
+
+        </button>
+
+        <h2 id="authTitle">
+            ورود به نیکی فمیلی
+        </h2>
+
+        <input
+            id="authEmail"
+            type="email"
+            placeholder="ایمیل">
+
+        <input
+            id="authPassword"
+            type="password"
+            placeholder="رمز عبور">
+
+        <input
+            id="authUsername"
+            type="text"
+            placeholder="نام شما"
+            style="display:none">
+
+        <button
+            id="authSubmit"
+            class="submit-btn"
+            onclick="submitAuth()">
+
+            ورود
+
+        </button>
+
+        <p
+            id="authSwitch"
+            class="auth-switch"
+            onclick="switchAuth()">
+
+            حساب ندارید؟ ثبت نام کنید
+
+        </p>
+
+        <p
+            id="authMessage"
+            class="auth-message">
+        </p>
+
+    </div>
+
+</div>
+
+
 <footer>
 
     <h2>
@@ -350,9 +380,8 @@
     </h2>
 
     <p>
-        انجمن دوستان و طرفداران نیکی سمیعی
-.
-       , ساخته شده توسط یک دهه نودی
+        انجمن دوستان و طرفداران نیکی سمیعی،
+        ساخته شده توسط یک دهه نودی
     </p>
 
     <p>
@@ -361,6 +390,12 @@
 
 </footer>
 
+
+<!-- کتابخانه Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- کد سایت -->
 
 <script src="script.js"></script>
 
