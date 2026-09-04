@@ -1,27 +1,368 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صفحه پیدا نشد</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO اصلی -->
+    <title>نیکی فمیلی | انجمن نیکی سمیعی</title>
+
+    <meta name="description"
+          content="نیکی فمیلی، انجمن دوستان و طرفداران نیکی سمیعی. در نیکی فمیلی می‌توانید تاپیک بسازید، درباره موضوعات مختلف گفتگو کنید و به دیگران پاسخ دهید.">
+
+    <meta name="robots"
+          content="index, follow, max-image-preview:large">
+
+    <meta name="author"
+          content="نیکی فمیلی">
+
+    <meta name="language"
+          content="Persian">
+
+    <meta name="theme-color"
+          content="#7c3aed">
+
+
+    <!-- Canonical -->
+    <link
+        rel="canonical"
+        href="https://nikanstudio.github.io/NikiFamily/"
+    >
+
+
+    <!-- Open Graph -->
+    <meta
+        property="og:title"
+        content="نیکی فمیلی | انجمن نیکی سمیعی"
+    >
+
+    <meta
+        property="og:description"
+        content="انجمن دوستان و طرفداران نیکی سمیعی؛ گفتگو، تاپیک و پاسخ"
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:url"
+        content="https://YOUR-GITHUB-USERNAME.github.io/niki-family/"
+    >
+
+    <meta
+        property="og:site_name"
+        content="نیکی فمیلی"
+    >
+
+    <meta
+        property="og:locale"
+        content="fa_IR"
+    >
+
+
+    <!-- Twitter / X -->
+    <meta
+        name="twitter:card"
+        content="summary"
+    >
+
+    <meta
+        name="twitter:title"
+        content="نیکی فمیلی | انجمن نیکی سمیعی"
+    >
+
+    <meta
+        name="twitter:description"
+        content="انجمن دوستان و طرفداران نیکی سمیعی"
+    >
+
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+
+        "name": "نیکی فمیلی",
+
+        "alternateName": [
+            "Niki Family",
+            "نیکی فمیلی انجمن"
+        ],
+
+        "description":
+        "انجمن دوستان و طرفداران نیکی سمیعی برای گفتگو، ساخت تاپیک و پاسخ به موضوعات مختلف.",
+
+        "url":
+        "https://YOUR-GITHUB-USERNAME.github.io/niki-family/",
+
+        "inLanguage": "fa-IR"
+    }
+    </script>
+
+
+    <!-- WebPage Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+
+        "@type": "WebPage",
+
+        "name":
+        "نیکی فمیلی | انجمن نیکی سمیعی",
+
+        "description":
+        "انجمن نیکی فمیلی برای دوستان و طرفداران نیکی سمیعی.",
+
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "نیکی فمیلی"
+        },
+
+        "inLanguage": "fa-IR"
+    }
+    </script>
+
+
+    <link rel="stylesheet" href="style.css">
+<meta name="google-site-verification" content="NA-VNYwk0HUDZgIJAKjF9BjkwXk6v08Cx38b94RFlmo" />
 </head>
+
 
 <body>
 
-<div class="card" style="text-align:center; margin-top:60px;">
 
-<h1>404</h1>
+<header class="header">
 
-<h2>😕 صفحه موردنظر پیدا نشد.</h2>
+    <div class="container header-content">
 
-<p>ممکن است آدرس اشتباه باشد یا صفحه حذف شده باشد.</p>
+        <div class="logo">
 
-<a href="index.html">
-<button>🏠 بازگشت به صفحه اصلی</button>
-</a>
+            <span>💜</span>
+
+            <div>
+
+                <h1>نیکی فمیلی</h1>
+
+                <small>
+                    انجمن دوستان نیکی سمیعی
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="new-topic-btn"
+            onclick="openTopicForm()">
+
+            + ساخت تاپیک
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- معرفی اصلی سایت -->
+
+    <section class="hero">
+
+        <h2>
+            نیکی فمیلی 💜
+        </h2>
+
+        <p>
+
+            به انجمن نیکی فمیلی خوش آمدید.
+
+            اینجا می‌توانید با دوستان و طرفداران
+            <strong>نیکی سمیعی</strong>
+            گفتگو کنید، تاپیک بسازید و به تاپیک‌های دیگران پاسخ دهید.
+
+        </p>
+
+    </section>
+
+
+    <!-- جستجو -->
+
+    <section class="search-box">
+
+        <label for="searchInput">
+            جستجو در نیکی فمیلی
+        </label>
+
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="مثلاً نیکی سمیعی..."
+            oninput="searchTopics()">
+
+    </section>
+
+
+    <!-- انجمن -->
+
+    <section class="forum">
+
+        <div class="section-title">
+
+            <h2>
+                آخرین تاپیک‌های نیکی فمیلی
+            </h2>
+
+            <span id="topicCount">
+                0 تاپیک
+            </span>
+
+        </div>
+
+
+        <div id="topics"></div>
+
+    </section>
+
+
+</main>
+
+
+<!-- ساخت تاپیک -->
+
+<div
+    id="topicModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeTopicForm()">
+
+            ×
+
+        </button>
+
+
+        <h2>
+            ساخت تاپیک در نیکی فمیلی
+        </h2>
+
+
+        <input
+            id="username"
+            type="text"
+            placeholder="نام شما">
+
+
+        <input
+            id="topicTitle"
+            type="text"
+            placeholder="عنوان تاپیک">
+
+
+        <textarea
+            id="topicText"
+            placeholder="موضوع خود را بنویسید...">
+        </textarea>
+
+
+        <button
+            class="submit-btn"
+            onclick="createTopic()">
+
+            ایجاد تاپیک
+
+        </button>
+
+    </div>
 
 </div>
+
+
+<!-- مشاهده تاپیک -->
+
+<div
+    id="topicView"
+    class="modal">
+
+    <div class="modal-box topic-page">
+
+        <button
+            class="close"
+            onclick="closeTopic()">
+
+            ×
+
+        </button>
+
+
+        <div id="topicContent"></div>
+
+
+        <hr>
+
+
+        <h3>
+            پاسخ به تاپیک
+        </h3>
+
+
+        <input
+            id="replyName"
+            type="text"
+            placeholder="نام شما">
+
+
+        <textarea
+            id="replyText"
+            placeholder="پاسخ خود را بنویسید...">
+        </textarea>
+
+
+        <button
+            class="submit-btn"
+            onclick="addReply()">
+
+            ارسال پاسخ
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <h2>
+        نیکی فمیلی
+    </h2>
+
+    <p>
+        انجمن دوستان و طرفداران نیکی سمیعی
+.
+       , ساخته شده توسط یک دهه نودی
+    </p>
+
+    <p>
+        © 2026 Niki Family
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
