@@ -23,366 +23,6 @@ let topics = [];
 
 let currentTopicId = null;
 
-let currentUser = null;
-
-let authMode = "login";
-
-
-/* =========================
-   ورود
-========================= */
-
-function openLogin() {
-
-    authMode = "login";
-
-    updateAuthModal();
-
-    document.getElementById("authModal")
-        .style.display = "block";
-}
-
-
-/* =========================
-   ثبت نام
-========================= */
-
-function openRegister() {
-
-    authMode = "register";
-
-    updateAuthModal();
-
-    document.getElementById("authModal")
-        .style.display = "block";
-}
-
-
-/* =========================
-   تغییر ورود / ثبت نام
-========================= */
-
-function switchAuth() {
-
-    authMode =
-        authMode === "login"
-            ? "register"
-            : "login";
-
-    updateAuthModal();
-}
-
-
-/* =========================
-   بروزرسانی فرم
-========================= */
-
-function updateAuthModal() {
-
-    const title =
-        document.getElementById("authTitle");
-
-    const button =
-        document.getElementById("authSubmit");
-
-    const username =
-        document.getElementById("authUsername");
-
-    const switchText =
-        document.getElementById("authSwitch");
-
-    const message =
-        document.getElementById("authMessage");
-
-
-    message.textContent = "";
-
-    message.style.color = "#d00";
-
-
-    if (authMode === "login") {
-
-        title.textContent =
-            "ورود به نیکی فمیلی";
-
-        button.textContent =
-            "ورود";
-
-        username.style.display =
-            "none";
-
-        switchText.textContent =
-            "حساب ندارید؟ ثبت نام کنید";
-
-    } else {
-
-        title.textContent =
-            "ثبت نام در نیکی فمیلی";
-
-        button.textContent =
-            "ثبت نام";
-
-        username.style.display =
-            "block";
-
-        switchText.textContent =
-            "قبلاً حساب ساخته‌اید؟ ورود";
-
-    }
-}
-
-
-/* =========================
-   بستن فرم احراز هویت
-========================= */
-
-function closeAuth() {
-
-    document.getElementById("authModal")
-        .style.display = "none";
-
-}
-
-
-/* =========================
-   ثبت نام / ورود
-========================= */
-
-async function submitAuth() {
-
-    const email =
-        document.getElementById("authEmail")
-            .value
-            .trim();
-
-    const password =
-        document.getElementById("authPassword")
-            .value;
-
-    const message =
-        document.getElementById("authMessage");
-
-
-    if (!email || !password) {
-
-        message.textContent =
-            "لطفاً ایمیل و رمز عبور را وارد کنید.";
-
-        return;
-    }
-
-
-    /* ثبت نام */
-
-    if (authMode === "register") {
-
-        const username =
-            document.getElementById("authUsername")
-                .value
-                .trim();
-
-
-        if (!username) {
-
-            message.textContent =
-                "لطفاً نام خود را وارد کنید.";
-
-            return;
-        }
-
-
-        if (password.length < 6) {
-
-            message.textContent =
-                "رمز عبور باید حداقل ۶ کاراکتر باشد.";
-
-            return;
-        }
-
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient.auth.signUp({
-
-                email: email,
-
-                password: password,
-
-                options: {
-
-                    data: {
-
-                        username: username
-
-                    }
-
-                }
-
-            });
-
-
-        if (error) {
-
-            console.error(error);
-
-            message.textContent =
-                error.message;
-
-            return;
-        }
-
-
-        if (data.session) {
-
-            message.style.color =
-                "green";
-
-            message.textContent =
-                "ثبت نام با موفقیت انجام شد.";
-
-            closeAuth();
-
-        } else {
-
-            message.style.color =
-                "green";
-
-            message.textContent =
-                "ثبت نام انجام شد. ایمیل خود را برای تأیید حساب بررسی کنید.";
-
-        }
-
-        return;
-    }
-
-
-    /* ورود */
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth
-            .signInWithPassword({
-
-                email: email,
-
-                password: password
-
-            });
-
-
-    if (error) {
-
-        message.textContent =
-            "ایمیل یا رمز عبور اشتباه است.";
-
-        return;
-    }
-
-
-    currentUser =
-        data.user;
-
-
-    closeAuth();
-
-    updateUserUI();
-
-}
-
-
-/* =========================
-   خروج
-========================= */
-
-async function logout() {
-
-    const {
-        error
-    } =
-        await supabaseClient.auth
-            .signOut();
-
-
-    if (error) {
-
-        console.error(error);
-
-        return;
-    }
-
-
-    currentUser = null;
-
-    updateUserUI();
-
-}
-
-
-/* =========================
-   نمایش وضعیت کاربر
-========================= */
-
-function updateUserUI() {
-
-    const loginButton =
-        document.getElementById("loginButton");
-
-    const registerButton =
-        document.getElementById("registerButton");
-
-    const logoutButton =
-        document.getElementById("logoutButton");
-
-    const userDisplay =
-        document.getElementById("userDisplay");
-
-
-    if (currentUser) {
-
-        loginButton.style.display =
-            "none";
-
-        registerButton.style.display =
-            "none";
-
-        logoutButton.style.display =
-            "inline-block";
-
-        const username =
-            currentUser.user_metadata
-                ?.username;
-
-
-        userDisplay.textContent =
-            username
-                ? "سلام " + username
-                : currentUser.email;
-
-        userDisplay.style.display =
-            "inline-block";
-
-    } else {
-
-        loginButton.style.display =
-            "inline-block";
-
-        registerButton.style.display =
-            "inline-block";
-
-        logoutButton.style.display =
-            "none";
-
-        userDisplay.style.display =
-            "none";
-
-    }
-
-}
-
 
 /* =========================
    دریافت تاپیک‌ها
@@ -395,11 +35,8 @@ async function loadTopics() {
         error
     } =
         await supabaseClient
-
             .from("topics")
-
             .select("*")
-
             .order(
                 "created_at",
                 {
@@ -431,8 +68,7 @@ async function loadTopics() {
     }
 
 
-    topics =
-        data || [];
+    topics = data || [];
 
 
     await displayTopics();
@@ -441,7 +77,7 @@ async function loadTopics() {
 
 
 /* =========================
-   گرفتن تعداد پاسخ‌های هر تاپیک
+   تعداد پاسخ‌های تاپیک
 ========================= */
 
 async function getReplyCount(topicId) {
@@ -451,9 +87,7 @@ async function getReplyCount(topicId) {
         error
     } =
         await supabaseClient
-
             .from("replies")
-
             .select(
                 "id",
                 {
@@ -461,7 +95,6 @@ async function getReplyCount(topicId) {
                     head: true
                 }
             )
-
             .eq(
                 "topic_id",
                 topicId
@@ -470,7 +103,10 @@ async function getReplyCount(topicId) {
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Reply count error:",
+            error
+        );
 
         return 0;
     }
@@ -507,7 +143,9 @@ async function displayTopics(
 
             <div class="empty">
 
-                تاپیکی پیدا نشد 😕
+                هنوز تاپیکی ساخته نشده 😕
+                <br>
+                اولین تاپیک را شما بسازید 💜
 
             </div>
 
@@ -550,22 +188,45 @@ async function displayTopics(
             );
 
 
+        const title =
+            escapeHTML(
+                topic.title || ""
+            );
+
+
+        const username =
+            escapeHTML(
+                topic.username || "ناشناس"
+            );
+
+
+        const text =
+            String(
+                topic.text || ""
+            );
+
+
+        const preview =
+            escapeHTML(
+                text.substring(
+                    0,
+                    120
+                )
+            );
+
+
         div.innerHTML = `
 
             <h3>
 
-                ${escapeHTML(
-                    topic.title
-                )}
+                ${title}
 
             </h3>
 
             <div class="topic-info">
 
                 توسط
-                ${escapeHTML(
-                    topic.username
-                )}
+                ${username}
 
                 •
                 ${formatDate(
@@ -580,15 +241,10 @@ async function displayTopics(
 
             <div class="topic-preview">
 
-                ${escapeHTML(
-                    topic.text.substring(
-                        0,
-                        120
-                    )
-                )}
+                ${preview}
 
                 ${
-                    topic.text.length > 120
+                    text.length > 120
                         ? "..."
                         : ""
                 }
@@ -608,22 +264,10 @@ async function displayTopics(
 
 
 /* =========================
-   باز کردن فرم تاپیک
+   باز کردن فرم ساخت تاپیک
 ========================= */
 
 function openTopicForm() {
-
-    if (!currentUser) {
-
-        alert(
-            "برای ساخت تاپیک ابتدا وارد حساب خود شوید."
-        );
-
-        openLogin();
-
-        return;
-    }
-
 
     document.getElementById(
         "topicModal"
@@ -631,23 +275,17 @@ function openTopicForm() {
         "block";
 
 
-    const usernameInput =
-        document.getElementById(
-            "username"
-        );
+    document.getElementById(
+        "username"
+    ).value = "";
 
+    document.getElementById(
+        "topicTitle"
+    ).value = "";
 
-    const savedUsername =
-        currentUser.user_metadata
-            ?.username;
-
-
-    if (savedUsername) {
-
-        usernameInput.value =
-            savedUsername;
-
-    }
+    document.getElementById(
+        "topicText"
+    ).value = "";
 
 }
 
@@ -672,27 +310,17 @@ function closeTopicForm() {
 
 async function createTopic() {
 
-    if (!currentUser) {
-
-        alert(
-            "برای ساخت تاپیک ابتدا وارد حساب خود شوید."
-        );
-
-        openLogin();
-
-        return;
-    }
-
-
     const username =
         document.getElementById(
             "username"
         ).value.trim();
 
+
     const title =
         document.getElementById(
             "topicTitle"
         ).value.trim();
+
 
     const text =
         document.getElementById(
@@ -700,12 +328,34 @@ async function createTopic() {
         ).value.trim();
 
 
-    if (!username ||
+    if (
+        !username ||
         !title ||
-        !text) {
+        !text
+    ) {
 
         alert(
             "لطفاً همه قسمت‌ها را پر کنید."
+        );
+
+        return;
+    }
+
+
+    if (username.length > 50) {
+
+        alert(
+            "نام شما نباید بیشتر از ۵۰ کاراکتر باشد."
+        );
+
+        return;
+    }
+
+
+    if (title.length > 150) {
+
+        alert(
+            "عنوان تاپیک نباید بیشتر از ۱۵۰ کاراکتر باشد."
         );
 
         return;
@@ -716,16 +366,17 @@ async function createTopic() {
         error
     } =
         await supabaseClient
-
             .from("topics")
-
             .insert({
 
-                title: title,
+                title:
+                    title,
 
-                text: text,
+                text:
+                    text,
 
-                username: username
+                username:
+                    username
 
             });
 
@@ -738,7 +389,7 @@ async function createTopic() {
         );
 
         alert(
-            "ساخت تاپیک انجام نشد."
+            "ساخت تاپیک انجام نشد.\n\nممکن است تنظیمات دسترسی Supabase هنوز برای کاربران بدون حساب فعال نشده باشد."
         );
 
         return;
@@ -763,6 +414,11 @@ async function createTopic() {
 
     await loadTopics();
 
+
+    alert(
+        "تاپیک با موفقیت ساخته شد 💜"
+    );
+
 }
 
 
@@ -782,7 +438,10 @@ async function openTopic(id) {
         );
 
 
-    if (!topic) return;
+    if (!topic) {
+
+        return;
+    }
 
 
     const content =
@@ -796,16 +455,17 @@ async function openTopic(id) {
         <h2 class="topic-main-title">
 
             ${escapeHTML(
-                topic.title
+                topic.title || ""
             )}
 
         </h2>
+
 
         <div class="topic-author">
 
             توسط
             ${escapeHTML(
-                topic.username
+                topic.username || "ناشناس"
             )}
 
             •
@@ -816,13 +476,15 @@ async function openTopic(id) {
 
         </div>
 
+
         <div class="topic-body">
 
             ${escapeHTML(
-                topic.text
+                topic.text || ""
             )}
 
         </div>
+
 
         <div id="repliesContainer">
 
@@ -839,7 +501,18 @@ async function openTopic(id) {
         "block";
 
 
-    await loadReplies(id);
+    document.getElementById(
+        "replyName"
+    ).value = "";
+
+    document.getElementById(
+        "replyText"
+    ).value = "";
+
+
+    await loadReplies(
+        id
+    );
 
 }
 
@@ -863,16 +536,12 @@ async function loadReplies(
         error
     } =
         await supabaseClient
-
             .from("replies")
-
             .select("*")
-
             .eq(
                 "topic_id",
                 topicId
             )
-
             .order(
                 "created_at",
                 {
@@ -888,15 +557,22 @@ async function loadReplies(
             error
         );
 
-        container.innerHTML =
-            "<p>دریافت پاسخ‌ها ناموفق بود.</p>";
+        container.innerHTML = `
+
+            <p>
+                دریافت پاسخ‌ها ناموفق بود.
+            </p>
+
+        `;
 
         return;
     }
 
 
-    if (!data ||
-        data.length === 0) {
+    if (
+        !data ||
+        data.length === 0
+    ) {
 
         container.innerHTML = `
 
@@ -934,10 +610,11 @@ async function loadReplies(
                     <strong>
 
                         ${escapeHTML(
-                            reply.username
+                            reply.username || "ناشناس"
                         )}
 
                     </strong>
+
 
                     <small>
 
@@ -947,10 +624,11 @@ async function loadReplies(
 
                     </small>
 
+
                     <div>
 
                         ${escapeHTML(
-                            reply.text
+                            reply.text || ""
                         )}
 
                     </div>
@@ -980,6 +658,10 @@ function closeTopic() {
     ).style.display =
         "none";
 
+
+    currentTopicId =
+        null;
+
 }
 
 
@@ -989,13 +671,11 @@ function closeTopic() {
 
 async function addReply() {
 
-    if (!currentUser) {
+    if (!currentTopicId) {
 
         alert(
-            "برای پاسخ دادن ابتدا وارد حساب شوید."
+            "تاپیک انتخاب نشده است."
         );
-
-        openLogin();
 
         return;
     }
@@ -1006,16 +686,30 @@ async function addReply() {
             "replyName"
         ).value.trim();
 
+
     const text =
         document.getElementById(
             "replyText"
         ).value.trim();
 
 
-    if (!name || !text) {
+    if (
+        !name ||
+        !text
+    ) {
 
         alert(
             "لطفاً نام و پاسخ را وارد کنید."
+        );
+
+        return;
+    }
+
+
+    if (name.length > 50) {
+
+        alert(
+            "نام شما نباید بیشتر از ۵۰ کاراکتر باشد."
         );
 
         return;
@@ -1026,9 +720,7 @@ async function addReply() {
         error
     } =
         await supabaseClient
-
             .from("replies")
-
             .insert({
 
                 topic_id:
@@ -1051,7 +743,7 @@ async function addReply() {
         );
 
         alert(
-            "ارسال پاسخ انجام نشد."
+            "ارسال پاسخ انجام نشد.\n\nممکن است تنظیمات دسترسی Supabase هنوز برای کاربران بدون حساب فعال نشده باشد."
         );
 
         return;
@@ -1071,7 +763,13 @@ async function addReply() {
         currentTopicId
     );
 
+
     await loadTopics();
+
+
+    alert(
+        "پاسخ با موفقیت ارسال شد 💜"
+    );
 
 }
 
@@ -1093,24 +791,36 @@ async function searchTopics() {
 
     const result =
         topics.filter(
-            topic =>
+            topic => {
 
-                topic.title
-                    .toLowerCase()
-                    .includes(query)
+                const title =
+                    String(
+                        topic.title || ""
+                    )
+                    .toLowerCase();
 
-                ||
 
-                topic.text
-                    .toLowerCase()
-                    .includes(query)
+                const text =
+                    String(
+                        topic.text || ""
+                    )
+                    .toLowerCase();
 
-                ||
 
-                topic.username
-                    .toLowerCase()
-                    .includes(query)
+                const username =
+                    String(
+                        topic.username || ""
+                    )
+                    .toLowerCase();
 
+
+                return (
+                    title.includes(query) ||
+                    text.includes(query) ||
+                    username.includes(query)
+                );
+
+            }
         );
 
 
@@ -1122,12 +832,17 @@ async function searchTopics() {
 
 
 /* =========================
-   تاریخ
+   فرمت تاریخ
 ========================= */
 
 function formatDate(date) {
 
-    if (!date) return "";
+    if (!date) {
+
+        return "";
+
+    }
+
 
     return new Date(date)
         .toLocaleDateString(
@@ -1174,43 +889,55 @@ function escapeHTML(text) {
 
 
 /* =========================
+   بستن Modal با کلیک بیرون
+========================= */
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        const topicModal =
+            document.getElementById(
+                "topicModal"
+            );
+
+
+        const topicView =
+            document.getElementById(
+                "topicView"
+            );
+
+
+        if (
+            event.target ===
+            topicModal
+        ) {
+
+            closeTopicForm();
+
+        }
+
+
+        if (
+            event.target ===
+            topicView
+        ) {
+
+            closeTopic();
+
+        }
+
+    }
+);
+
+
+/* =========================
    شروع سایت
 ========================= */
 
 async function init() {
 
-    const {
-        data
-    } =
-        await supabaseClient.auth
-            .getSession();
-
-
-    currentUser =
-        data.session
-            ? data.session.user
-            : null;
-
-
-    updateUserUI();
-
-
     await loadTopics();
-
-
-    supabaseClient.auth
-        .onAuthStateChange(
-            (_event, session) => {
-
-                currentUser =
-                    session
-                        ? session.user
-                        : null;
-
-                updateUserUI();
-
-            }
-        );
 
 }
 
