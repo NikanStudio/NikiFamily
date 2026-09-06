@@ -1,6 +1,6 @@
 /* ==================================================
    NIKI FAMILY
-   اتصال به Supabase
+   Supabase Cloud Database
    ================================================== */
 
 const SUPABASE_URL =
@@ -17,7 +17,7 @@ const supabaseClient =
 
 
 /* ==================================================
-   متغیرهای اصلی
+   Variables
    ================================================== */
 
 let topics = [];
@@ -25,7 +25,7 @@ let currentTopicId = null;
 
 
 /* ==================================================
-   دریافت تمام تاپیک‌ها
+   Load Topics
    ================================================== */
 
 async function loadTopics() {
@@ -45,19 +45,13 @@ async function loadTopics() {
             error
         );
 
-        const container =
-            document.getElementById("topics");
-
-        if (container) {
-
-            container.innerHTML = `
-                <div class="empty">
-                    دریافت تاپیک‌ها با مشکل مواجه شد.
-                    <br><br>
-                    لطفاً دوباره تلاش کنید.
-                </div>
-            `;
-        }
+        document.getElementById("topics").innerHTML = `
+            <div class="empty">
+                دریافت تاپیک‌ها با مشکل مواجه شد.
+                <br><br>
+                ${escapeHTML(error.message)}
+            </div>
+        `;
 
         return;
     }
@@ -69,7 +63,7 @@ async function loadTopics() {
 
 
 /* ==================================================
-   تعداد پاسخ‌های یک تاپیک
+   Reply Count
    ================================================== */
 
 async function getReplyCount(topicId) {
@@ -101,7 +95,7 @@ async function getReplyCount(topicId) {
 
 
 /* ==================================================
-   نمایش تاپیک‌ها
+   Display Topics
    ================================================== */
 
 async function displayTopics(list = topics) {
@@ -142,8 +136,6 @@ async function displayTopics(list = topics) {
     container.innerHTML = "";
 
 
-    /* جدیدترین تاپیک‌ها اول */
-
     const reversed =
         [...list].reverse();
 
@@ -179,9 +171,13 @@ async function displayTopics(list = topics) {
             );
 
 
+        /* مهم:
+           ستون دیتابیس اسمش Text است
+        */
+
         const text =
             String(
-                topic.text || ""
+                topic.Text || ""
             );
 
 
@@ -230,7 +226,7 @@ async function displayTopics(list = topics) {
 
 
 /* ==================================================
-   باز کردن فرم ساخت تاپیک
+   Open Topic Form
    ================================================== */
 
 function openTopicForm() {
@@ -250,42 +246,24 @@ function openTopicForm() {
         "block";
 
 
-    const username =
-        document.getElementById(
-            "username"
-        );
+    document.getElementById(
+        "username"
+    ).value = "";
 
 
-    const title =
-        document.getElementById(
-            "topicTitle"
-        );
+    document.getElementById(
+        "topicTitle"
+    ).value = "";
 
 
-    const text =
-        document.getElementById(
-            "topicText"
-        );
-
-
-    if (username) {
-        username.value = "";
-    }
-
-
-    if (title) {
-        title.value = "";
-    }
-
-
-    if (text) {
-        text.value = "";
-    }
+    document.getElementById(
+        "topicText"
+    ).value = "";
 }
 
 
 /* ==================================================
-   بستن فرم ساخت تاپیک
+   Close Topic Form
    ================================================== */
 
 function closeTopicForm() {
@@ -305,7 +283,7 @@ function closeTopicForm() {
 
 
 /* ==================================================
-   ساخت تاپیک جدید
+   Create Topic
    ================================================== */
 
 async function createTopic() {
@@ -328,8 +306,6 @@ async function createTopic() {
         ).value.trim();
 
 
-    /* بررسی خالی نبودن */
-
     if (
         !username ||
         !title ||
@@ -344,8 +320,6 @@ async function createTopic() {
     }
 
 
-    /* محدودیت نام */
-
     if (
         username.length > 50
     ) {
@@ -357,8 +331,6 @@ async function createTopic() {
         return;
     }
 
-
-    /* محدودیت عنوان */
 
     if (
         title.length > 150
@@ -372,7 +344,24 @@ async function createTopic() {
     }
 
 
-    /* ارسال به Supabase */
+    if (
+        text.length > 5000
+    ) {
+
+        alert(
+            "متن تاپیک نباید بیشتر از ۵۰۰۰ کاراکتر باشد."
+        );
+
+        return;
+    }
+
+
+    /* ==================================================
+       Insert Topic
+
+       ستون دیتابیس:
+       Text
+       ================================================== */
 
     const { data, error } =
         await supabaseClient
@@ -381,7 +370,7 @@ async function createTopic() {
 
                 title: title,
 
-                text: text,
+                Text: text,
 
                 username: username
 
@@ -413,8 +402,6 @@ async function createTopic() {
     );
 
 
-    /* پاک کردن فرم */
-
     document.getElementById(
         "username"
     ).value = "";
@@ -433,8 +420,6 @@ async function createTopic() {
     closeTopicForm();
 
 
-    /* دریافت دوباره تاپیک‌ها */
-
     await loadTopics();
 
 
@@ -445,7 +430,7 @@ async function createTopic() {
 
 
 /* ==================================================
-   باز کردن یک تاپیک
+   Open Topic
    ================================================== */
 
 async function openTopic(id) {
@@ -464,7 +449,6 @@ async function openTopic(id) {
 
 
     if (!topic) {
-
         return;
     }
 
@@ -476,7 +460,6 @@ async function openTopic(id) {
 
 
     if (!content) {
-
         return;
     }
 
@@ -510,7 +493,7 @@ async function openTopic(id) {
         <div class="topic-body">
 
             ${escapeHTML(
-                topic.text || ""
+                topic.Text || ""
             )}
 
         </div>
@@ -538,28 +521,14 @@ async function openTopic(id) {
     }
 
 
-    const replyName =
-        document.getElementById(
-            "replyName"
-        );
+    document.getElementById(
+        "replyName"
+    ).value = "";
 
 
-    const replyText =
-        document.getElementById(
-            "replyText"
-        );
-
-
-    if (replyName) {
-
-        replyName.value = "";
-    }
-
-
-    if (replyText) {
-
-        replyText.value = "";
-    }
+    document.getElementById(
+        "replyText"
+    ).value = "";
 
 
     await loadReplies(id);
@@ -567,7 +536,7 @@ async function openTopic(id) {
 
 
 /* ==================================================
-   دریافت پاسخ‌های یک تاپیک
+   Load Replies
    ================================================== */
 
 async function loadReplies(topicId) {
@@ -579,7 +548,6 @@ async function loadReplies(topicId) {
 
 
     if (!container) {
-
         return;
     }
 
@@ -608,14 +576,14 @@ async function loadReplies(topicId) {
         container.innerHTML = `
             <p>
                 دریافت پاسخ‌ها ناموفق بود.
+                <br><br>
+                ${escapeHTML(error.message)}
             </p>
         `;
 
         return;
     }
 
-
-    /* هیچ پاسخی وجود ندارد */
 
     if (
         !data ||
@@ -695,7 +663,7 @@ async function loadReplies(topicId) {
 
 
 /* ==================================================
-   بستن صفحه تاپیک
+   Close Topic
    ================================================== */
 
 function closeTopic() {
@@ -719,7 +687,7 @@ function closeTopic() {
 
 
 /* ==================================================
-   ارسال پاسخ
+   Add Reply
    ================================================== */
 
 async function addReply() {
@@ -746,8 +714,6 @@ async function addReply() {
         ).value.trim();
 
 
-    /* بررسی خالی نبودن */
-
     if (
         !name ||
         !text
@@ -761,8 +727,6 @@ async function addReply() {
     }
 
 
-    /* محدودیت نام */
-
     if (
         name.length > 50
     ) {
@@ -775,8 +739,6 @@ async function addReply() {
     }
 
 
-    /* محدودیت پاسخ */
-
     if (
         text.length > 2000
     ) {
@@ -788,8 +750,6 @@ async function addReply() {
         return;
     }
 
-
-    /* ارسال پاسخ */
 
     const { data, error } =
         await supabaseClient
@@ -833,8 +793,6 @@ async function addReply() {
     );
 
 
-    /* پاک کردن فرم */
-
     document.getElementById(
         "replyName"
     ).value = "";
@@ -845,14 +803,10 @@ async function addReply() {
     ).value = "";
 
 
-    /* دریافت دوباره پاسخ‌ها */
-
     await loadReplies(
         currentTopicId
     );
 
-
-    /* به‌روزرسانی تعداد پاسخ‌ها */
 
     await loadTopics();
 
@@ -864,7 +818,7 @@ async function addReply() {
 
 
 /* ==================================================
-   جستجوی تاپیک‌ها
+   Search
    ================================================== */
 
 async function searchTopics() {
@@ -876,7 +830,6 @@ async function searchTopics() {
 
 
     if (!input) {
-
         return;
     }
 
@@ -886,8 +839,6 @@ async function searchTopics() {
             .toLowerCase()
             .trim();
 
-
-    /* اگر چیزی نوشته نشده */
 
     if (!query) {
 
@@ -911,7 +862,7 @@ async function searchTopics() {
 
                 const text =
                     String(
-                        topic.text || ""
+                        topic.Text || ""
                     ).toLowerCase();
 
 
@@ -938,13 +889,12 @@ async function searchTopics() {
 
 
 /* ==================================================
-   فرمت تاریخ
+   Format Date
    ================================================== */
 
 function formatDate(date) {
 
     if (!date) {
-
         return "";
     }
 
@@ -970,7 +920,7 @@ function formatDate(date) {
 
 
 /* ==================================================
-   جلوگیری از HTML Injection
+   Security
    ================================================== */
 
 function escapeHTML(text) {
@@ -1005,7 +955,7 @@ function escapeHTML(text) {
 
 
 /* ==================================================
-   بستن Modal با کلیک بیرون
+   Close Modal By Outside Click
    ================================================== */
 
 window.addEventListener(
@@ -1046,13 +996,13 @@ window.addEventListener(
 
 
 /* ==================================================
-   شروع سایت
+   Start
    ================================================== */
 
 async function init() {
 
     console.log(
-        "Niki Family starting..."
+        "Niki Family started."
     );
 
 
@@ -1060,7 +1010,5 @@ async function init() {
 
 }
 
-
-/* اجرای سایت */
 
 init();
