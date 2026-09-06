@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 
     <meta charset="UTF-8">
@@ -24,8 +25,14 @@
     <meta name="theme-color"
           content="#7c3aed">
 
+
+    <!-- Canonical -->
+
     <link rel="canonical"
           href="https://nikanstudio.github.io/NikiFamily/">
+
+
+    <!-- Open Graph -->
 
     <meta property="og:title"
           content="نیکی فمیلی | انجمن نیکی سمیعی">
@@ -45,6 +52,9 @@
     <meta property="og:locale"
           content="fa_IR">
 
+
+    <!-- Twitter -->
+
     <meta name="twitter:card"
           content="summary">
 
@@ -54,7 +64,11 @@
     <meta name="twitter:description"
           content="انجمن دوستان و طرفداران نیکی سمیعی">
 
+
+    <!-- Schema: Website -->
+
     <script type="application/ld+json">
+
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -67,9 +81,14 @@
         "url": "https://nikanstudio.github.io/NikiFamily/",
         "inLanguage": "fa-IR"
     }
+
     </script>
 
+
+    <!-- Schema: WebPage -->
+
     <script type="application/ld+json">
+
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
@@ -81,20 +100,37 @@
         },
         "inLanguage": "fa-IR"
     }
+
     </script>
 
-    <link rel="stylesheet" href="style.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="style.css">
+
+
+    <!-- Google Search Console -->
 
     <meta name="google-site-verification"
           content="NA-VNYwk0HUDZgIJAKjF9BjkwXk6v08Cx38b94RFlmo">
 
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     Header
+========================= -->
 
 <header class="header">
 
     <div class="container header-content">
+
+
+        <!-- Logo -->
 
         <div class="logo">
 
@@ -102,7 +138,9 @@
 
             <div>
 
-                <h1>نیکی فمیلی</h1>
+                <h1>
+                    نیکی فمیلی
+                </h1>
 
                 <small>
                     انجمن دوستان نیکی سمیعی
@@ -112,41 +150,10 @@
 
         </div>
 
+
+        <!-- Header buttons -->
+
         <div class="header-buttons">
-
-            <button
-                id="loginButton"
-                class="header-auth-btn"
-                onclick="openLogin()">
-
-                ورود
-
-            </button>
-
-            <button
-                id="registerButton"
-                class="header-auth-btn"
-                onclick="openRegister()">
-
-                ثبت نام
-
-            </button>
-
-            <button
-                id="logoutButton"
-                class="header-auth-btn"
-                onclick="logout()"
-                style="display:none">
-
-                خروج
-
-            </button>
-
-            <span
-                id="userDisplay"
-                class="user-display"
-                style="display:none">
-            </span>
 
             <button
                 class="new-topic-btn"
@@ -158,13 +165,21 @@
 
         </div>
 
+
     </div>
 
 </header>
 
 
+
+<!-- =========================
+     Main
+========================= -->
+
 <main class="container">
 
+
+    <!-- Hero -->
 
     <section class="hero">
 
@@ -185,10 +200,15 @@
     </section>
 
 
+
+    <!-- Search -->
+
     <section class="search-box">
 
         <label for="searchInput">
+
             جستجو در نیکی فمیلی
+
         </label>
 
         <input
@@ -200,21 +220,32 @@
     </section>
 
 
+
+    <!-- Forum -->
+
     <section class="forum">
+
 
         <div class="section-title">
 
             <h2>
+
                 آخرین تاپیک‌های نیکی فمیلی
+
             </h2>
 
+
             <span id="topicCount">
+
                 0 تاپیک
+
             </span>
 
         </div>
 
+
         <div id="topics"></div>
+
 
     </section>
 
@@ -222,11 +253,17 @@
 </main>
 
 
-<!-- ساخت تاپیک -->
 
-<div id="topicModal" class="modal">
+<!-- =========================
+     ساخت تاپیک
+========================= -->
+
+<div id="topicModal"
+     class="modal">
+
 
     <div class="modal-box">
+
 
         <button
             class="close"
@@ -236,23 +273,30 @@
 
         </button>
 
+
         <h2>
+
             ساخت تاپیک در نیکی فمیلی
+
         </h2>
+
 
         <input
             id="username"
             type="text"
             placeholder="نام شما">
 
+
         <input
             id="topicTitle"
             type="text"
             placeholder="عنوان تاپیک">
 
+
         <textarea
             id="topicText"
             placeholder="موضوع خود را بنویسید..."></textarea>
+
 
         <button
             class="submit-btn"
@@ -262,16 +306,23 @@
 
         </button>
 
+
     </div>
 
 </div>
 
 
-<!-- مشاهده تاپیک -->
 
-<div id="topicView" class="modal">
+<!-- =========================
+     مشاهده تاپیک
+========================= -->
+
+<div id="topicView"
+     class="modal">
+
 
     <div class="modal-box topic-page">
+
 
         <button
             class="close"
@@ -281,22 +332,30 @@
 
         </button>
 
+
         <div id="topicContent"></div>
+
 
         <hr>
 
+
         <h3>
+
             پاسخ به تاپیک
+
         </h3>
+
 
         <input
             id="replyName"
             type="text"
             placeholder="نام شما">
 
+
         <textarea
             id="replyText"
             placeholder="پاسخ خود را بنویسید..."></textarea>
+
 
         <button
             class="submit-btn"
@@ -306,98 +365,27 @@
 
         </button>
 
-    </div>
-
-</div>
-
-
-<!-- ورود / ثبت نام -->
-
-<div id="authModal" class="modal">
-
-    <div class="modal-box">
-
-        <button
-            class="close"
-            onclick="closeAuth()">
-
-            ×
-
-        </button>
-
-        <h2 id="authTitle">
-            ورود به نیکی فمیلی
-        </h2>
-
-        <input
-            id="authEmail"
-            type="email"
-            placeholder="ایمیل">
-
-        <input
-            id="authPassword"
-            type="password"
-            placeholder="رمز عبور">
-
-        <input
-            id="authUsername"
-            type="text"
-            placeholder="نام شما"
-            style="display:none">
-
-        <button
-            id="authSubmit"
-            class="submit-btn"
-            onclick="submitAuth()">
-
-            ورود
-
-        </button>
-
-        <p
-            id="authSwitch"
-            class="auth-switch"
-            onclick="switchAuth()">
-
-            حساب ندارید؟ ثبت نام کنید
-
-        </p>
-
-        <p
-            id="authMessage"
-            class="auth-message">
-        </p>
 
     </div>
 
 </div>
 
 
-<footer>
 
-    <h2>
-        نیکی فمیلی
-    </h2>
-
-    <p>
-        انجمن دوستان و طرفداران نیکی سمیعی،
-        ساخته شده توسط یک دهه نودی
-    </p>
-
-    <p>
-        © 2026 Niki Family
-    </p>
-
-</footer>
-
-
-<!-- کتابخانه Supabase -->
+<!-- =========================
+     Supabase
+========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- کد سایت -->
+
+<!-- =========================
+     JavaScript
+========================= -->
 
 <script src="script.js"></script>
 
+
 </body>
+
 </html>
