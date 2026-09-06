@@ -22,7 +22,9 @@ body {
 }
 
 
-/* Header */
+/* =========================
+   Header
+========================= */
 
 .header {
     background: #7c3aed;
@@ -64,25 +66,6 @@ body {
     flex-wrap: wrap;
 }
 
-.header-auth-btn {
-    border: none;
-    background: white;
-    color: #6d28d9;
-    padding: 8px 12px;
-    border-radius: 9px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.user-display {
-    color: white;
-    font-size: 13px;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .new-topic-btn {
     border: none;
     background: white;
@@ -93,8 +76,14 @@ body {
     cursor: pointer;
 }
 
+.new-topic-btn:hover {
+    background: #f3e8ff;
+}
 
-/* Hero */
+
+/* =========================
+   Hero
+========================= */
 
 .hero {
     margin-top: 25px;
@@ -110,7 +99,9 @@ body {
 }
 
 
-/* Search */
+/* =========================
+   Search
+========================= */
 
 .search-box {
     margin: 20px 0;
@@ -136,7 +127,9 @@ body {
 }
 
 
-/* Forum */
+/* =========================
+   Forum
+========================= */
 
 .forum {
     background: white;
@@ -161,7 +154,9 @@ body {
 }
 
 
-/* Topic */
+/* =========================
+   Topic
+========================= */
 
 .topic {
     border: 1px solid #eee;
@@ -193,7 +188,9 @@ body {
 }
 
 
-/* Modal */
+/* =========================
+   Modal
+========================= */
 
 .modal {
     display: none;
@@ -226,8 +223,14 @@ body {
     color: #777;
 }
 
+.close:hover {
+    color: #333;
+}
 
-/* Inputs */
+
+/* =========================
+   Inputs
+========================= */
 
 .modal-box input,
 .modal-box textarea {
@@ -252,7 +255,9 @@ body {
 }
 
 
-/* Button */
+/* =========================
+   Submit Button
+========================= */
 
 .submit-btn {
     width: 100%;
@@ -271,25 +276,9 @@ body {
 }
 
 
-/* Auth */
-
-.auth-switch {
-    text-align: center;
-    margin-top: 15px;
-    color: #6d28d9;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.auth-message {
-    text-align: center;
-    margin-top: 10px;
-    color: #d00;
-    font-size: 13px;
-}
-
-
-/* Topic Page */
+/* =========================
+   Topic Page
+========================= */
 
 .topic-main-title {
     color: #5b21b6;
@@ -327,7 +316,9 @@ body {
 }
 
 
-/* Empty */
+/* =========================
+   Empty
+========================= */
 
 .empty {
     text-align: center;
@@ -336,7 +327,9 @@ body {
 }
 
 
-/* Footer */
+/* =========================
+   Footer
+========================= */
 
 footer {
     text-align: center;
@@ -346,7 +339,9 @@ footer {
 }
 
 
-/* Mobile */
+/* =========================
+   Mobile
+========================= */
 
 @media (max-width: 700px) {
 
@@ -363,9 +358,8 @@ footer {
         width: 100%;
     }
 
-    .header-auth-btn,
     .new-topic-btn {
-        flex: 1;
+        width: 100%;
     }
 
     .hero {
@@ -379,10 +373,6 @@ footer {
     .modal-box {
         margin: 20px auto;
         padding: 20px;
-    }
-
-    .user-display {
-        display: none;
     }
 
 }
